@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { envConfig } from '@config/env.config'
 import { TokenResponse, HHUserInfo } from '../auth.types'
-import { InternalServerError } from '@utils/errors'
+import { BadRequestError, InternalServerError } from '@utils/errors'
 import { Logger } from '@utils/logger'
 
 export class HHApiService {
@@ -35,6 +35,18 @@ export class HHApiService {
       return response.data
     } catch (error: any) {
       Logger.error('Error exchanging code for token:', error.response?.data)
+
+      if (error.response?.data?.error === 'invalid_grant') {
+        if (
+          error.response?.data?.error_description ===
+          'code has already been used'
+        ) {
+          throw new BadRequestError(
+            'Authorization code has already been used. Please try logging in again.'
+          )
+        }
+      }
+
       throw new InternalServerError('Failed to exchange authorization code')
     }
   }

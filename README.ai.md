@@ -23,7 +23,7 @@ A Node.js/Express backend application that integrates with the HeadHunter (hh.ru
 - `firebase-admin` - Firebase backend SDK for Firestore and Auth
 - `axios` - HTTP client for external API calls (HeadHunter API)
 - `joi` - Schema validation for request payloads
-- `module-alias` - Path aliasing for cleaner imports
+- `tsconfig-paths` - Path aliasing for cleaner imports
 - `dotenv` - Environment variable management
 - `nodemon` - Development auto-reload
 - `ts-node` - TypeScript execution for development
@@ -109,7 +109,6 @@ headhunter/
 │           ├── errors.ts         # Custom error classes
 │           ├── logger.ts         # Logging utility
 │           └── response.ts       # API response formatter
-├── module-alias.ts                # Path alias configuration
 ├── generateFirebaseCredentials.js # Firebase setup script
 ├── nodemon.json                   # Nodemon configuration
 ├── tsconfig.json                  # TypeScript configuration
@@ -129,7 +128,7 @@ headhunter/
   ```
 - **Module Alias Registration**: First import in entry point
   ```typescript
-  import 'module-alias/register' // Must be first import
+  import 'tsconfig-paths/register' // Must be first import
   ```
 
 ### Class-Based Architecture
@@ -163,6 +162,7 @@ headhunter/
   ```
 
 - **Repositories**: Class-based with Firestore integration
+
   ```typescript
   export class UserRepository {
     private collection: FirebaseFirestore.CollectionReference
@@ -287,7 +287,7 @@ export const envConfig = {
 
 ### Path Aliases
 
-Configured in `module-alias.ts` and `tsconfig.json`:
+Configured in `tsconfig.json`:
 
 ```typescript
 '@config': 'src/shared/config',
@@ -369,7 +369,7 @@ npm start        # Run compiled JavaScript (production)
 - **Target**: ES2020
 - **Module**: CommonJS
 - **Strict Mode**: Enabled
-- **Path Mapping**: Matches module-alias configuration
+- **Path Mapping**: Matches module alias in typescript configuration
 - **Output**: `dist/` directory
 
 ## Middleware Stack

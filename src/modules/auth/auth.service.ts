@@ -16,11 +16,7 @@ export class AuthService {
 
   generateAuthorizationUrl(): AuthorizationUrlResponse {
     const state = Math.random().toString(36).substring(7)
-    const authUrl = `https://hh.ru/oauth/authorize?response_type=code&client_id=${
-      envConfig.hhClientId
-    }&state=${state}&redirect_uri=${encodeURIComponent(
-      envConfig.hhRedirectUri
-    )}`
+    const authUrl = `https://hh.ru/oauth/authorize?response_type=code&client_id=${envConfig.hhClientId}&state=${state}`
 
     return { authUrl }
   }

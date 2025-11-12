@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 interface EnvConfig {
+  frontendUrl: string
   port: number
   nodeEnv: string
   hhClientId: string
@@ -20,6 +21,7 @@ const getEnvVariable = (key: string, defaultValue?: string): string => {
 }
 
 export const envConfig: EnvConfig = {
+  frontendUrl: getEnvVariable('FRONTEND_URL', 'http://localhost:5173'),
   port: parseInt(getEnvVariable('PORT', '3000'), 10),
   nodeEnv: getEnvVariable('NODE_ENV', 'development'),
   hhClientId: getEnvVariable('HH_CLIENT_ID'),
