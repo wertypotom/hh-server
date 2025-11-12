@@ -1,4 +1,5 @@
-import 'module-alias/register' // Must be first import
+import 'tsconfig-paths/register'
+
 import express, { Application } from 'express'
 import { envConfig } from '@config/env.config'
 import routes from '@modules/index'
