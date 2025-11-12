@@ -61,6 +61,8 @@ export class HHApiService {
         new URLSearchParams({
           grant_type: 'refresh_token',
           refresh_token: refreshToken,
+          client_id: envConfig.hhClientId,
+          client_secret: envConfig.hhClientSecret,
         }),
         {
           headers: {

@@ -3,6 +3,7 @@ import { UserRepository } from '@modules/user/user.repository'
 import { HHApiService } from './services/hh-api.service'
 import { AuthorizationUrlResponse } from './auth.types'
 import { User } from '@modules/user/user.types'
+import { BadRequestError } from '@/shared/utils/errors'
 
 export class AuthService {
   private userRepository: UserRepository
@@ -50,7 +51,11 @@ export class AuthService {
     const user = await this.userRepository.findById(userId)
 
     if (!user.refreshToken) {
-      throw new Error('Refresh token not found')
+      throw new BadRequestError('Refresh token not found for user')
+    }
+
+    if (user.tokenExpiresAt && Date.now() < user.tokenExpiresAt) {
+      return { accessToken: user.accessToken! }
     }
 
     // Refresh token

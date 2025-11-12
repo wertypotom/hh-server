@@ -21,14 +21,14 @@ export class AuthController {
 
   handleCallback = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { code, error } = req.query
+      const { code, error, state } = req.query
 
       if (error) {
         throw new BadRequestError('Access denied by user')
       }
 
-      if (!code) {
-        throw new BadRequestError('Authorization code not provided')
+      if (!code || !state) {
+        throw new BadRequestError('Authorization code or state not provided')
       }
 
       const user = await this.authService.handleCallback(code as string)
